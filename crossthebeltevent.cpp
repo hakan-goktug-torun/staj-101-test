@@ -3,11 +3,17 @@
 //
 
 #include "crossthebeltevent.h"
-void crossTheBeltEvent::crossTheBelt(std::shared_ptr<Ship> ship) {
-    std::cout << "You've seen asteroids traveling through space and they are very close to your ship! Watch out!\n";
-    ship->possEscape(1);
-    std::cout << "\nNew Health: " << ship->getHealth() << "\n";
+
+void crossTheBeltEvent::manageEvents(std::shared_ptr<Ship> ship) {
+    std::cout << "⚠️ Asteroid field detected!\n";
+    int chance = rand() % 101;
+    if (ship->getPercEscape() >= chance) {
+        std::cout << "You escaped the asteroid belt!\n";
+    } else {
+        std::cout << "You took damage from asteroids!\n";
+        ship->takeDamage(ship->getAsDamage());
+        std::cout << "Health: " << ship->getHealth() << "\n";
+    }
 }
 
-void crossTheBeltEvent::abandonedPlanet(std::shared_ptr<Ship> ship) {}
-void crossTheBeltEvent::spacePirates(std::shared_ptr<Ship> ship) {}
+//gereksiz fonksiyonlar silindi
