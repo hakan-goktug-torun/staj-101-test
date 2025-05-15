@@ -19,7 +19,7 @@ public:
 
     virtual int getAsDamage() const = 0;
     virtual int getPercEscape() const = 0;
-    virtual int getDamage() const = 0;
+    virtual int getDamage() const = 0;  //alt fonk override edilecek soyutlama için
 
     int getFuel() const { return fuel; }
     int getHealth() const { return health; }
@@ -34,7 +34,7 @@ public:
         if (health < 0) health = 0;
     }
 
-    virtual ~Ship() = default;
+    virtual ~Ship() = default; // poliformic yıkım kontrolü için
 };
 
 #endif //SPACEGAMES_SHIP_H

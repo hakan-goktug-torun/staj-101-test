@@ -11,15 +11,16 @@ constexpr int kFuelConsumption = 33;
 constexpr int kFightSuccessRate = 50;
 
 void spacePiratesEvent::manageEvents(std::shared_ptr<Ship> ship) {
-    spacePirates(ship);  // kendi özel olayını çağırır
+    spacePirates(ship);
 }
 
-void spacePiratesEvent::spacePirates(std::shared_ptr<Ship> ship) {
+void spacePiratesEvent::spacePirates(const std::shared_ptr<Ship>& ship) {
     std::string decision;
     int overRun = 0;
 
-    std::cout << "***********************\n";
+    std::cout << "*************************\n";
     std::cout << "Space Pirates are coming!\n";
+    std::cout << "*************************\n";
 
     while (true) {
         if (ship->getFuel() <= 1 && overRun == 0) {
@@ -52,9 +53,10 @@ bool spacePiratesEvent::handleRun(const std::shared_ptr<Ship>& ship) {
     } else {
         std::cout << "You couldn't escape! Lost fuel.\n";
     }
-    ship->setFuel(ship->getFuel() - kFuelConsumption);
-    std::cout << "Ship's fuel: " << ship->getFuel() << "\n";
-    return true; // Run ends event
+
+    consumptionFuel(ship);
+    std::cout << "Fuel left: " << ship->getFuel() << "\n";
+    return true;
 }
 
 bool spacePiratesEvent::handleFight(const std::shared_ptr<Ship>& ship) {

@@ -10,10 +10,9 @@
 
 class spacePiratesEvent : public Events {
 public:
-    void manageEvents(std::shared_ptr<Ship> ship) override;  // override
+    void manageEvents(std::shared_ptr<Ship> ship) override; 
 private:
-    void spacePirates(std::shared_ptr<Ship> ship);
-
+    void spacePirates(const std::shared_ptr<Ship>& ship);
     void consumptionFuel(const std::shared_ptr<Ship>& ship);
     bool handleRun(const std::shared_ptr<Ship>& ship);
     bool handleFight(const std::shared_ptr<Ship>& ship);

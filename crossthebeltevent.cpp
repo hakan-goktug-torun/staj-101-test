@@ -5,7 +5,7 @@
 #include "crossthebeltevent.h"
 
 void crossTheBeltEvent::manageEvents(std::shared_ptr<Ship> ship) {
-    std::cout << "⚠️ Asteroid field detected!\n";
+    std::cout << " Asteroid field detected!\n";
     int chance = rand() % 101;
     if (ship->getPercEscape() >= chance) {
         std::cout << "You escaped the asteroid belt!\n";
