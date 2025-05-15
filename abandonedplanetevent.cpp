@@ -3,24 +3,22 @@
 //
 
 #include "abandonedplanetevent.h"
+#include "spacepiratesevent.h" // spacePiratesı çağırmak için ekledim
 
-void abandonedPlanetEvent::abandonedPlanet(std::shared_ptr<Ship> ship) {
-    int value {0};
+const int kCoinReward = 10; //magic number ihtimalini yok etmek için const ile ekledim
+
+void abandonedPlanetEvent::manageEvents(std::shared_ptr<Ship> ship) {
+    std::cout << "You discovered an abandoned planet!\n";
     int random = rand() % 101;
-    std::cout << "While traveling through space, you saw an abandoned planet and decided to go! Maybe there are surprises waiting for you.\n";
     if (random >= 50) {
-        value = 10 + ship->getBalance();
-        ship->setBalance(value);
-        std::cout << "Congratulations! You get 10 coins! Your new balance: " << ship->getBalance() << "\n";
-    }
-    else {
-        std::cout << "Space pirates caught you collecting coins and you couldn't collect any! \n";
-        spacePirates(ship);
+        ship->setBalance(ship->getBalance() + kCoinReward);
+        std::cout << " You found 10 coins. Balance: " << ship->getBalance() << "\n";
+    } else {
+        std::cout << " Space pirates ambushed you!\n";
+        spacePiratesEvent pirates;
+        pirates.manageEvents(ship);  // doğrudan spacepirates olayını çağırır
     }
 }
 
-void abandonedPlanetEvent::crossTheBelt(std::shared_ptr<Ship> ship) {}
 
-void abandonedPlanetEvent::spacePirates(std::shared_ptr<Ship> ship) {
-
-}
+// fazlalık fonksiyonlar silindi
