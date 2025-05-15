@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-spacegame",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-std=c++17",
+        "main.cpp",
+        "gameengine.cpp",
+        "eventmanager.cpp",
+        "spacepiratesevent.cpp",
+        "abandonedplanetevent.cpp",
+        "crossthebeltevent.cpp",
+        "shipfactory.cpp",
+        "scoreservice.cpp",
+        "-o",
+        "spacegame.exe"
+      ],
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "detail": "Builds the Space Game project"
+    }
+  ]
+}
