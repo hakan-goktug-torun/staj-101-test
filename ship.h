@@ -10,7 +10,6 @@
 
 class Ship {
 protected:
-    int percEscape{};
     int fuel{};
     int health{};
     int balance{};
@@ -30,8 +29,10 @@ public:
     void setHealth(int _health) { health = _health; }
     void setBalance(int _balance) { balance = _balance; }
 
-    void takenDamage(int eventNum);
-    void possEscape(int eventNum);
+    void takeDamage(int amount) { // possescape ile takendamage çıkarıldı- takedamage eklendi.
+        health -= amount;
+        if (health < 0) health = 0;
+    }
 
     virtual ~Ship() = default;
 };
