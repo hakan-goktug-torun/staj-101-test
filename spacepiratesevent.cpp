@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <limits>
+#include <algorithm>
 
 constexpr int kFuelConsumption = 33;
 constexpr int kFightSuccessRate = 50;
@@ -31,11 +32,15 @@ void spacePiratesEvent::spacePirates(const std::shared_ptr<Ship>& ship) {
         std::cout << "Run, fight, negotiate?\n> ";
         std::cin >> decision;
 
-        if (decision == "run" && ship->getFuel() > 1) {
+
+        // Normalize input: lowercase all
+        std::transform(decision.begin(), decision.end(), decision.begin(), ::tolower);
+
+        if ((decision == "run" || decision == "r") && ship->getFuel() > 1) {
             if (handleRun(ship)) break;
-        } else if (decision == "fight") {
+        } else if (decision == "fight" || decision == "f") {
             if (handleFight(ship)) break;
-        } else if (decision == "negotiate") {
+        } else if (decision == "negotiate" || decision == "n") {
             if (handleNegotiate(ship)) break;
         } else {
             std::cout << "Invalid choice. Try again.\n";

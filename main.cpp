@@ -30,10 +30,6 @@ int main() {
     std::cout << "\nPlease enter your name for the scoreboard: ";
     std::cin >> playerName;
 
-    int finalScore = ScoreService::calculate(ship);
-    ScoreService::display(finalScore);
-    ScoreService::saveToFile(playerName, finalScore);
-
     return 0;
 }
 

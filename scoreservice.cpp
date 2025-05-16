@@ -11,7 +11,7 @@ void ScoreService::display(int score) {
 }
 
 void ScoreService::saveToFile(const std::string& playerName, int score) {
-    std::ofstream file("scores.txt", std::ios::app); // append mod
+    std::ofstream file("scores.txt", std::ios::app); 
     if (file.is_open()) {
         file << playerName << ": " << score << "\n";
         file.close();
