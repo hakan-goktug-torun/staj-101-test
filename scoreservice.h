@@ -7,7 +7,7 @@
 
 class ScoreService {
 public:
-    static int calculate(const std::shared_ptr<Ship>& ship);
+    static int calculate(const std::shared_ptr<Ship>& ship); //nesne çağırmadan kullanabilmek için static
     static void display(int score);
     static void saveToFile(const std::string& playerName, int score);
 };
