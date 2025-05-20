@@ -1,9 +1,23 @@
 #include "shipfactory.h"
 
-std::shared_ptr<Ship> ShipFactory::createShip(const std::string& type) {
+std::shared_ptr<Ship> ShipFactory::createShip(ShipType type) {
     int fuel = 100, health = 100, balance = 0;
-    if (type == "s") return std::make_shared<strongShip>(fuel, health, balance);
-    if (type == "f") return std::make_shared<fastShip>(fuel, health, balance);
-    if (type == "n") return std::make_shared<normalShip>(fuel, health, balance);
-    return nullptr;
+
+    switch (type) {
+        case ShipType::Strong:
+            return std::make_shared<strongShip>(fuel, health, balance);
+        case ShipType::Fast:
+            return std::make_shared<fastShip>(fuel, health, balance);
+        case ShipType::Normal:
+            return std::make_shared<normalShip>(fuel, health, balance);
+        default:
+            return nullptr;
+    }
+}
+
+ShipType ShipFactory::getShipTypeFromString(const std::string& typeStr) {
+    if (typeStr == "s") return ShipType::Strong;
+    if (typeStr == "f") return ShipType::Fast;
+    if (typeStr == "n") return ShipType::Normal;
+    return ShipType::Invalid;
 }

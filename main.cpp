@@ -18,7 +18,8 @@ int main() {
 
     while (true) {
         std::cin >> choice;
-        ship = ShipFactory::createShip(choice);
+        ShipType type = ShipFactory::getShipTypeFromString(choice);
+        ship = ShipFactory::createShip(type);        
         if (ship) break;
         std::cout << "Invalid choice. Try again (s/f/n): ";
     }
