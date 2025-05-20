@@ -3,8 +3,12 @@
 #include <cstdlib>
 
 void EventManager::triggerRandomEvent(const std::shared_ptr<Ship>& ship) {
+    if (ship->getFuel() <= 0) {
+        std::cout << "[!] Your ship has no fuel left. Event skipped.\n";
+        return;
+    }   
+     
     int eventType = rand() % 3;
-
     std::unique_ptr<Events> event;
 
     switch (eventType) {
