@@ -5,8 +5,6 @@
 #include "abandonedplanetevent.h"
 #include "spacepiratesevent.h" // spacePiratesı çağırmak için ekledim
 
-const int kCoinReward = 10; //magic number ihtimalini yok etmek için const ile ekledim
-
 void abandonedPlanetEvent::manageEvents(std::shared_ptr<Ship> ship) {
     std::cout << "You discovered an abandoned planet!\n";
     int random = rand() % 101;
@@ -19,6 +17,4 @@ void abandonedPlanetEvent::manageEvents(std::shared_ptr<Ship> ship) {
         pirates.manageEvents(ship);  // doğrudan spacepirates olayını çağırır
     }
 }
-
-
 // fazlalık fonksiyonlar silindi

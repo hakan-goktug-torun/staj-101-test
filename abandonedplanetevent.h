@@ -10,9 +10,12 @@
 class abandonedPlanetEvent : public Events {
 public:
     void manageEvents(std::shared_ptr<Ship> ship) override;
+
+private:
+    static const int kCoinReward = 10;
+    // Bu sabit yalnızca bu sınıfla ilgili olduğu için class içine aldım. Const ile sabitledim ve static ile işaret ettim.
 };
 
 #endif // SPACEGAMES_ABANDONEDPLANETEVENT_H
-
 
 
