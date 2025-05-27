@@ -1,10 +1,11 @@
 #include <iostream>
 #include <ctime>
 #include <windows.h>
-#include "system/uimanager.h"
-#include "system/playerinterface.h"
-#include "system/gameengine.h"
-#include "system/scoreservice.h"
+#include "../ui/uimanager.h"
+#include "playerinterface.h"
+#include "gameengine.h"
+#include "../services/scoreservice.h"
+
 
 int main() {
     SetConsoleOutputCP(65001);

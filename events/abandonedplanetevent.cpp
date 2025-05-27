@@ -1,6 +1,6 @@
 #include "abandonedplanetevent.h"
 #include "spacepiratesevent.h"
-#include "../system/uimanager.h"
+#include "../ui/uimanager.h"
 
 void abandonedPlanetEvent::manageEvents(std::shared_ptr<Ship> ship) {
     UIManager::abandonedPlanetDiscovered();

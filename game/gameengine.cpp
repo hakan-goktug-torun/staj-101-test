@@ -1,7 +1,7 @@
 #include "gameengine.h"
-#include "eventmanager.h"
-#include "scoreservice.h"
-#include "uimanager.h"
+#include "../services/eventmanager.h"
+#include "../services/scoreservice.h"
+#include "../ui/uimanager.h"
 #include <iostream>
 #include <algorithm>
 

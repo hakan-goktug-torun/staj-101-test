@@ -1,7 +1,7 @@
 #include "playerinterface.h"
-#include "shipfactory.h"
-#include "scoreservice.h"
-#include "uimanager.h"
+#include "../services/shipfactory.h"
+#include "../services/scoreservice.h"
+#include "../ui/uimanager.h"
 #include <iostream>
 
 std::shared_ptr<Ship> PlayerInterface::promptForShip(std::string& outType) {

@@ -1,5 +1,5 @@
 #include "scoreservice.h"
-#include "uimanager.h"
+#include "../ui/uimanager.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>

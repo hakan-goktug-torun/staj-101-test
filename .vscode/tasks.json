@@ -1,35 +1,37 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Build Space Game",
-            "type": "shell",
-            "command": "g++",
-            "args": [
-                "-std=c++17",
-                "-fexec-charset=UTF-8",
-                "main.cpp",
-                "system/playerinterface.cpp",
-                "system/gameengine.cpp",
-                "system/eventmanager.cpp",
-                "system/shipfactory.cpp",
-                "system/scoreservice.cpp",
-                "system/uimanager.cpp",
-                "events/spacepiratesevent.cpp",
-                "events/abandonedplanetevent.cpp",
-                "events/crossthebeltevent.cpp",
-                "-o",
-                "spacegame.exe",
-                "-Isystem",
-                "-Ievents",
-                "-Iships"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": ["$gcc"],
-            "detail": "Derleme: spacegame.exe oluşturuluyor (UTF-8 destekli)"
-        }
-    ]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Space Game",
+      "type": "shell",
+      "command": "g++",
+      "args": [
+        "-std=c++17",
+        "-fexec-charset=UTF-8",
+        "game/main.cpp",
+        "game/GameEngine.cpp",
+        "game/PlayerInterface.cpp",
+        "services/EventManager.cpp",
+        "services/ScoreService.cpp",
+        "services/ShipFactory.cpp",
+        "events/AbandonedPlanetEvent.cpp",
+        "events/SpacePiratesEvent.cpp",
+        "events/CrossTheBeltEvent.cpp",
+        "ui/uimanager.cpp",
+        "-o",
+        "spacegame.exe",
+        "-Icore",
+        "-Ievents",
+        "-Iservices",
+        "-Iui",
+        "-Igame"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Derleme: spacegame.exe oluşturuluyor (UTF-8 destekli)"
+    }
+  ]
 }

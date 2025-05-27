@@ -1,5 +1,5 @@
 #include "crossthebeltevent.h"
-#include "../system/uimanager.h"
+#include "../ui/uimanager.h"
 
 void crossTheBeltEvent::manageEvents(std::shared_ptr<Ship> ship) {
     UIManager::asteroidFieldDetected();

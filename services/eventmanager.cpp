@@ -2,7 +2,7 @@
 #include "../events/abandonedplanetevent.h"
 #include "../events/crossthebeltevent.h"
 #include "../events/spacepiratesevent.h"
-#include "../system/uimanager.h"
+#include "../ui/uimanager.h"
 #include <cstdlib>
 
 void EventManager::triggerRandomEvent(const std::shared_ptr<Ship>& ship) {

@@ -1,5 +1,5 @@
 #include "spacepiratesevent.h"
-#include "../system/uimanager.h"
+#include "../ui/uimanager.h"
 #include <cstdlib>
 #include <limits>
 #include <algorithm>
