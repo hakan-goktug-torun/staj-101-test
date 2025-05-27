@@ -12,11 +12,3 @@ elif: 1500
 fero: 435
 hakan: 270
 cihan: 1400
-hakan: 1535
-hakan: 1535
-hakan: 1700
-hakan: 1700
-hakan: 1535
-hakan: 1535
-hakan: 1285
-hakan: 270
