@@ -255,4 +255,6 @@ public:
             case Language::EN: default: UI_ENG::abandonedPlanetPirates(); break;
         }
     }
+    static Language parseLanguageInput(const std::string& input);
+
 };
