@@ -1,1 +1,14 @@
 hakan: 1300
+hakan: 1285
+elif: 1200
+mehmet: 735
+bedo: 955
+fero: 1070
+onur: 1005
+fero: 1600
+berke: 1250
+hakan: 835
+elif: 1500
+fero: 435
+hakan: 270
+cihan: 1400

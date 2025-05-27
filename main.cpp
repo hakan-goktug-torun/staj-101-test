@@ -1,6 +1,7 @@
 #include <ctime>
 #include "playerinterface.h"
 #include "gameengine.h"
+#include "scoreservice.h"
 
 int main() {
     srand(static_cast<unsigned>(time(nullptr)));
@@ -12,6 +13,7 @@ int main() {
     engine.start(ship);
 
     PlayerInterface::askAndSaveScore(ship);
+    ScoreService::displayTop5();
 
     return 0;
 }
