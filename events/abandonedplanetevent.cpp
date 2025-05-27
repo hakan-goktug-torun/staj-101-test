@@ -1,20 +1,18 @@
-//
-// Created by ChatCPP on 02.03.2024
-//
-
 #include "abandonedplanetevent.h"
-#include "spacepiratesevent.h" // spacePiratesı çağırmak için ekledim
+#include "spacepiratesevent.h"
+#include "../system/uimanager.h"
 
 void abandonedPlanetEvent::manageEvents(std::shared_ptr<Ship> ship) {
-    std::cout << "You discovered an abandoned planet!\n";
+    UIManager::abandonedPlanetDiscovered();
+
     int random = rand() % 101;
     if (random >= 50) {
         ship->setBalance(ship->getBalance() + kCoinReward);
-        std::cout << " You found 10 coins. Balance: " << ship->getBalance() << "\n";
+        UIManager::abandonedPlanetFoundCoins(kCoinReward);
     } else {
-        std::cout << " Space pirates ambushed you!\n";
+        UIManager::abandonedPlanetPirates();
         spacePiratesEvent pirates;
-        pirates.manageEvents(ship);  // doğrudan spacepirates olayını çağırır
+        pirates.manageEvents(ship);
     }
 }
 // fazlalık fonksiyonlar silindi

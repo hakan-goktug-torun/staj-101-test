@@ -22,8 +22,8 @@ std::shared_ptr<Ship> ShipFactory::createShip(ShipType type) {
 ShipType ShipFactory::getShipTypeFromString(const std::string& typeStr) {
     std::string lowerType = typeStr;
     std::transform(lowerType.begin(), lowerType.end(), lowerType.begin(), ::tolower);
-    if (typeStr == "s") return ShipType::Strong;
-    if (typeStr == "f") return ShipType::Fast;
+    if (typeStr == "s" || typeStr == "g") return ShipType::Strong;
+    if (typeStr == "f" || typeStr == "h") return ShipType::Fast;
     if (typeStr == "n") return ShipType::Normal;
     return ShipType::Invalid;
 }

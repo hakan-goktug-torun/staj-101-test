@@ -2,11 +2,12 @@
 #include "../events/abandonedplanetevent.h"
 #include "../events/crossthebeltevent.h"
 #include "../events/spacepiratesevent.h"
+#include "../system/uimanager.h"
 #include <cstdlib>
 
 void EventManager::triggerRandomEvent(const std::shared_ptr<Ship>& ship) {
     if (ship->getFuel() <= 0) {
-        std::cout << "[!] Your ship has no fuel left. Event skipped.\n";
+        UIManager::abandonedPlanetDiscovered();
         return;
     }   
      

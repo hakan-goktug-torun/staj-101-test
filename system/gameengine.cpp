@@ -1,48 +1,36 @@
 #include "gameengine.h"
 #include "eventmanager.h"
 #include "scoreservice.h"
-#include "../ships/ship.h"
+#include "uimanager.h"
 #include <iostream>
 #include <algorithm>
 
-void GameEngine::printStatus(const std::shared_ptr<Ship>& ship) {
-    std::cout << "\n=== Ship Status ===\n";
-    std::cout << "Fuel: " << ship->getFuel() << "\n";
-    std::cout << "Health: " << ship->getHealth() << "\n";
-    std::cout << "Balance: " << ship->getBalance() << "\n";
-    std::cout << "===================\n";
-}
-
-bool GameEngine::start(const std::shared_ptr<Ship>& ship) {
+int GameEngine::start(const std::shared_ptr<Ship>& ship) {
     EventManager eventManager;
 
     for (int i = 0; i < 5; ++i) {
-        if (ship->getFuel() <= 1 && i != 0) {
+        eventManager.triggerRandomEvent(ship);
+        UIManager::printStatus(ship);
 
-            std::cout << "\nYour ship is out of fuel!\n";
-            ScoreService::display(ScoreService::calculate(ship));
-            return false;
+        if (ship->getFuel() <= 1) {
+            UIManager::outOfFuel();
+            return 0; // yakıt bitti
         }
 
-        eventManager.triggerRandomEvent(ship);
-        printStatus(ship); // HER EVENTTEN SONRA DURUMU GÖSTER
-
-        std::string answer;  
+        std::string answer;
         while (true) {
-            std::cout << "\nDo you want to continue? (y/n): ";
+            UIManager::promptContinue();
             std::cin >> answer;
             std::transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 
-            if (answer == "y" || answer == "yes") break;
-            if (answer == "n" || answer == "no") {
-                std::cout << "\nThanks for playing!\n";
-                ScoreService::display(ScoreService::calculate(ship));
-                return true; // oyun kendi isteğiyle bitti, save yapılabilir
+            if (answer == "y" || answer == "yes" || answer == "evet" || answer == "e") break;
+            if (answer == "n" || answer == "no" || answer == "hayır" || answer == "h") {
+                UIManager::printThanks();
+                return -1; // kullanıcı çıktı
             }
-            std::cout << "Invalid input. Please enter y or n.\n";
+            UIManager::invalidInput();
         }
     }
 
-    ScoreService::display(ScoreService::calculate(ship));
-    return true;
+    return 1; // normal bitis
 }

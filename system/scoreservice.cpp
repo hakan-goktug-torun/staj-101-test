@@ -1,7 +1,7 @@
 #include "scoreservice.h"
+#include "uimanager.h"
 #include <iostream>
-#include <fstream> //dosya okuma ve yazma için 
-
+#include <fstream>
 #include <sstream>
 #include <vector>
 #include <algorithm>
@@ -11,17 +11,17 @@ int ScoreService::calculate(const std::shared_ptr<Ship>& ship) {
 }
 
 void ScoreService::display(int score) {
-    std::cout << "Your game score: " << score << "\nCongratulations!\n";
+    UIManager::printCongratulations(score);
 }
 
 void ScoreService::saveToFile(const std::string& playerName, int score) {
-    std::ofstream file("scores.txt", std::ios::app); 
+    std::ofstream file("scores.txt", std::ios::app);
     if (file.is_open()) {
         file << playerName << ": " << score << "\n";
         file.close();
-        std::cout << "Score saved to scores.txt\n";
+        UIManager::scoreSaved();
     } else {
-        std::cout << "Could not open file to save score.\n";
+        UIManager::gameSaveFailed();
     }
 }
 
@@ -35,8 +35,7 @@ std::map<std::string, int> ScoreService::loadScores() {
         std::string name;
         int score;
         if (std::getline(iss, name, ':') && iss >> score) {
-            // Whitespace temizliği
-            name.erase(std::remove_if(name.begin(), name.end(), ::isspace), name.end());
+            name.erase(std::remove_if(name.begin(), name.end(), [](char c) { return std::isspace(static_cast<unsigned char>(c)); }), name.end());
             scores[name] = std::max(scores[name], score);
         }
     }
@@ -49,10 +48,10 @@ void ScoreService::displayTop5() {
     std::vector<std::pair<std::string, int>> scoreVec(scores.begin(), scores.end());
 
     std::sort(scoreVec.begin(), scoreVec.end(), [](const auto& a, const auto& b) {
-        return a.second > b.second;  // büyükten küçüğe sırala
+        return a.second > b.second;
     });
 
-    std::cout << "\n=== TOP 5 SCORES ===\n";
+    UIManager::displayTop5Header();
     int count = 0;
     for (const auto& [name, score] : scoreVec) {
         std::cout << name << ": " << score << "\n";
@@ -60,14 +59,15 @@ void ScoreService::displayTop5() {
     }
     std::cout << "====================\n";
 }
+
 void ScoreService::saveGame(const std::shared_ptr<Ship>& ship, const std::string& shipType) {
     std::ofstream file("save.txt");
     if (file.is_open()) {
         file << shipType << " " << ship->getFuel() << " " << ship->getHealth() << " " << ship->getBalance() << "\n";
         file.close();
-        std::cout << "Game saved to save.txt!\n";
+        UIManager::gameSaved();
     } else {
-        std::cout << "Failed to save the game.\n";
+        UIManager::gameSaveFailed();
     }
 }
 
@@ -77,10 +77,10 @@ std::tuple<std::string, int, int, int> ScoreService::loadGame() {
     int fuel, health, balance;
 
     if (file.is_open() && file >> type >> fuel >> health >> balance) {
-        std::cout << "Game loaded from save.txt!\n";
+        UIManager::gameLoaded();
         return {type, fuel, health, balance};
     } else {
-        std::cout << "No saved game found or file corrupted.\n";
+        UIManager::loadFailed();
         return {"", 0, 0, 0};
     }
 }

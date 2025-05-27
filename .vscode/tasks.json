@@ -7,12 +7,14 @@
             "command": "g++",
             "args": [
                 "-std=c++17",
+                "-fexec-charset=UTF-8",
                 "main.cpp",
                 "system/playerinterface.cpp",
                 "system/gameengine.cpp",
                 "system/eventmanager.cpp",
                 "system/shipfactory.cpp",
                 "system/scoreservice.cpp",
+                "system/uimanager.cpp",
                 "events/spacepiratesevent.cpp",
                 "events/abandonedplanetevent.cpp",
                 "events/crossthebeltevent.cpp",
@@ -27,7 +29,7 @@
                 "isDefault": true
             },
             "problemMatcher": ["$gcc"],
-            "detail": "Derleme: spacegame.exe oluşturuluyor"
+            "detail": "Derleme: spacegame.exe oluşturuluyor (UTF-8 destekli)"
         }
     ]
 }
