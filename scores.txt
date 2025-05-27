@@ -13,3 +13,4 @@ fero: 435
 hakan: 270
 cihan: 1400
 hakan: 405
+hakan: 405
