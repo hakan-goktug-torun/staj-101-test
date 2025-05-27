@@ -3,12 +3,17 @@
 #include "../services/scoreservice.h"
 #include "../ui/uimanager.h"
 #include <iostream>
+#include <sstream>
+#include <algorithm>  // transform
 
 std::shared_ptr<Ship> PlayerInterface::promptForShip(std::string& outType) {
     std::string choice;
     while (true) {
-        std::cin >> choice;
-        ShipType type = ShipFactory::getShipTypeFromString(choice);
+        std::getline(std::cin, choice);
+
+        std::transform(choice.begin(), choice.end(), choice.begin(), ::tolower);
+
+        ShipType type = ShipFactory::StringToShipType(choice);
         auto ship = ShipFactory::createShip(type);
         if (ship) {
             if (choice == "s" || choice == "g") outType = "Strong";
@@ -24,8 +29,11 @@ std::shared_ptr<Ship> PlayerInterface::promptForShip(std::string& outType) {
 std::shared_ptr<Ship> PlayerInterface::loadOrCreateShip(std::string& outType) {
     UIManager::printWelcomeMenu();
 
-    int menuChoice;
-    std::cin >> menuChoice;
+    std::string input;
+    std::getline(std::cin, input);
+    std::stringstream ss(input);
+    int menuChoice = 0;
+    ss >> menuChoice;
 
     if (menuChoice == 2) {
         auto [type, fuel, health, balance] = ScoreService::loadGame();
@@ -41,13 +49,21 @@ std::shared_ptr<Ship> PlayerInterface::loadOrCreateShip(std::string& outType) {
 std::string PlayerInterface::askPlayerName() {
     std::string name;
     UIManager::promptName();
-    std::cin >> name;
+    std::getline(std::cin, name);
+
+    while (name.empty()) {
+        UIManager::invalidInput();
+        UIManager::promptName();
+        std::getline(std::cin, name);
+    }
     return name;
 }
 
 bool PlayerInterface::askToSaveGame() {
     std::string saveChoice;
     UIManager::askToSave();
-    std::cin >> saveChoice;
-    return saveChoice == "y" || saveChoice == "Y" || saveChoice == "e" || saveChoice == "E";
+    std::getline(std::cin, saveChoice);
+
+    std::transform(saveChoice.begin(), saveChoice.end(), saveChoice.begin(), ::tolower);
+    return saveChoice == "y" || saveChoice == "e";
 }

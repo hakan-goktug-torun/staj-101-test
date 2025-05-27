@@ -20,17 +20,37 @@ std::shared_ptr<Ship> ShipFactory::createShip(ShipType type) {
 }
 
 ShipType ShipFactory::getShipTypeFromString(const std::string& typeStr) {
-    std::string lowerType = typeStr;
-    std::transform(lowerType.begin(), lowerType.end(), lowerType.begin(), ::tolower);
-    if (typeStr == "s" || typeStr == "g") return ShipType::Strong;
-    if (typeStr == "f" || typeStr == "h") return ShipType::Fast;
-    if (typeStr == "n") return ShipType::Normal;
-    return ShipType::Invalid;
+    return StringToShipType(typeStr);
 }
 
 std::shared_ptr<Ship> ShipFactory::createShipFromSave(const std::string& typeStr, int fuel, int health, int balance) {
-    if (typeStr == "Strong") return std::make_shared<strongShip>(fuel, health, balance);
-    if (typeStr == "Fast") return std::make_shared<fastShip>(fuel, health, balance);
-    if (typeStr == "Normal") return std::make_shared<normalShip>(fuel, health, balance);
-    return nullptr;
+    ShipType type = StringToShipType(typeStr);
+    switch (type) {
+        case ShipType::Strong:
+            return std::make_shared<strongShip>(fuel, health, balance);
+        case ShipType::Fast:
+            return std::make_shared<fastShip>(fuel, health, balance);
+        case ShipType::Normal:
+            return std::make_shared<normalShip>(fuel, health, balance);
+        default:
+            return nullptr;
+    }
+}
+
+std::string ShipFactory::ShipTypeToString(ShipType type) {
+    switch (type) {
+        case ShipType::Strong: return "Strong";
+        case ShipType::Fast:   return "Fast";
+        case ShipType::Normal: return "Normal";
+        default:               return "Invalid";
+    }
+}
+
+ShipType ShipFactory::StringToShipType(const std::string& typeStr) {
+    std::string lower = typeStr;
+    std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
+    if (lower == "strong" || lower == "s" || lower == "g") return ShipType::Strong;
+    if (lower == "fast"   || lower == "f" || lower == "h") return ShipType::Fast;
+    if (lower == "normal" || lower == "n") return ShipType::Normal;
+    return ShipType::Invalid;
 }

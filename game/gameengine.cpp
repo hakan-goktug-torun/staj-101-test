@@ -20,7 +20,7 @@ int GameEngine::start(const std::shared_ptr<Ship>& ship) {
         std::string answer;
         while (true) {
             UIManager::promptContinue();
-            std::cin >> answer;
+            std::getline(std::cin, answer);
             std::transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 
             if (answer == "y" || answer == "yes" || answer == "evet" || answer == "e") break;
@@ -32,5 +32,5 @@ int GameEngine::start(const std::shared_ptr<Ship>& ship) {
         }
     }
 
-    return 1; // normal bitis
+    return 1; // normal bitiş
 }
