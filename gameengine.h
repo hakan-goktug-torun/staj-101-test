@@ -3,10 +3,13 @@
 
 #include "ship.h"
 #include <memory>
+#include <string>
 
 class GameEngine {
 public:
-    void start(const std::shared_ptr<Ship>& ship);
+    bool start(const std::shared_ptr<Ship>& ship);
+    void printStatus(const std::shared_ptr<Ship>& ship);
+
 };
 
 #endif // SPACEGAMES_GAMEENGINE_H

@@ -24,3 +24,10 @@ ShipType ShipFactory::getShipTypeFromString(const std::string& typeStr) {
     if (typeStr == "n") return ShipType::Normal;
     return ShipType::Invalid;
 }
+
+std::shared_ptr<Ship> ShipFactory::createShipFromSave(const std::string& typeStr, int fuel, int health, int balance) {
+    if (typeStr == "Strong") return std::make_shared<strongShip>(fuel, health, balance);
+    if (typeStr == "Fast") return std::make_shared<fastShip>(fuel, health, balance);
+    if (typeStr == "Normal") return std::make_shared<normalShip>(fuel, health, balance);
+    return nullptr;
+}

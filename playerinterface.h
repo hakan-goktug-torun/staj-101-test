@@ -2,12 +2,15 @@
 #define SPACEGAMES_PLAYERINTERFACE_H
 
 #include <memory>
+#include <string>
 #include "ship.h"
 
 class PlayerInterface {
 public:
-    static std::shared_ptr<Ship> selectShip();                   // Gemi seçimi ekranı
-    static void askAndSaveScore(const std::shared_ptr<Ship>&);   // Kullanıcı adı alır ve skoru kaydeder
+    static std::shared_ptr<Ship> promptForShip(std::string& outType);
+    static std::shared_ptr<Ship> loadOrCreateShip(std::string& outType);
+    static std::string askPlayerName();
+    static bool askToSaveGame();
 };
 
 #endif // SPACEGAMES_PLAYERINTERFACE_H

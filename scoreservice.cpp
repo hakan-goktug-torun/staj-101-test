@@ -60,3 +60,27 @@ void ScoreService::displayTop5() {
     }
     std::cout << "====================\n";
 }
+void ScoreService::saveGame(const std::shared_ptr<Ship>& ship, const std::string& shipType) {
+    std::ofstream file("save.txt");
+    if (file.is_open()) {
+        file << shipType << " " << ship->getFuel() << " " << ship->getHealth() << " " << ship->getBalance() << "\n";
+        file.close();
+        std::cout << "Game saved to save.txt!\n";
+    } else {
+        std::cout << "Failed to save the game.\n";
+    }
+}
+
+std::tuple<std::string, int, int, int> ScoreService::loadGame() {
+    std::ifstream file("save.txt");
+    std::string type;
+    int fuel, health, balance;
+
+    if (file.is_open() && file >> type >> fuel >> health >> balance) {
+        std::cout << "Game loaded from save.txt!\n";
+        return {type, fuel, health, balance};
+    } else {
+        std::cout << "No saved game found or file corrupted.\n";
+        return {"", 0, 0, 0};
+    }
+}
