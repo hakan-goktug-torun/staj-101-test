@@ -5,19 +5,22 @@
 #ifndef SPACEGAMES_SPACEPIRATESEVENT_H
 #define SPACEGAMES_SPACEPIRATESEVENT_H
 
-#pragma once
 #include <memory>
 #include "events.h"
 
 class spacePiratesEvent : public Events {
 public:
-    void spacePirates(std::shared_ptr<Ship> ship) override;
-    void crossTheBelt(std::shared_ptr<Ship> ship) override;
-    void abandonedPlanet(std::shared_ptr<Ship> ship) override;
-    static void consumptionFuel(const std::shared_ptr<Ship>& ship);
+    void manageEvents(std::shared_ptr<Ship> ship) override; 
+private:
+    void spacePirates(const std::shared_ptr<Ship>& ship);
+    void consumptionFuel(const std::shared_ptr<Ship>& ship);
+    bool handleRun(const std::shared_ptr<Ship>& ship);
+    bool handleFight(const std::shared_ptr<Ship>& ship);
+    bool handleNegotiate(const std::shared_ptr<Ship>& ship);
 };
 
+#endif // SPACEGAMES_SPACEPIRATESEVENT_H
 
 
 
-#endif //SPACEGAMES_SPACEPIRATESEVENT_H
+

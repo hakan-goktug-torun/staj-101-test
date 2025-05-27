@@ -5,15 +5,14 @@
 #ifndef SPACEGAMES_EVENTS_H
 #define SPACEGAMES_EVENTS_H
 
-#pragma once
-#include "ship.h"
+#include <iostream>
 #include <memory>
+#include "ship.h"
 
 class Events {
 public:
-    virtual void crossTheBelt(std::shared_ptr<Ship> ship)=0;
-    virtual void abandonedPlanet(std::shared_ptr<Ship> ship)=0;
-    virtual void spacePirates(std::shared_ptr<Ship> ship)=0;
+    virtual void manageEvents(std::shared_ptr<Ship> ship) = 0; // bir tane method olsun birden fazla eventin override olmasına gerek yok
+    virtual ~Events() = default;
 };
 
-#endif //SPACEGAMES_EVENTS_H
+#endif // SPACEGAMES_EVENTS_H
