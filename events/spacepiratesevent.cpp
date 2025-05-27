@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <limits>
 #include <algorithm>
+#include <iostream>
 
 constexpr int kFuelConsumption = 33;
 constexpr int kFightSuccessRate = 50;
@@ -11,35 +12,52 @@ void spacePiratesEvent::manageEvents(std::shared_ptr<Ship> ship) {
     spacePirates(ship);
 }
 
+spacePiratesEvent::Action spacePiratesEvent::parseActionInput(const std::string& input) {
+    std::string lower = input;
+    std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
+
+    if (lower == "run" || lower == "r" || lower == "k") return Action::Run;
+    if (lower == "fight" || lower == "f" || lower == "s") return Action::Fight;
+    if (lower == "negotiate" || lower == "n" || lower == "p") return Action::Negotiate;
+    return Action::Invalid;
+}
+
 void spacePiratesEvent::spacePirates(const std::shared_ptr<Ship>& ship) {
     std::string decision;
     int overRun = 0;
+    int attempts = 0;
+    constexpr int maxAttempts = 3;
 
     UIManager::pirateIncoming();
 
-    while (true) {
+    while (attempts < maxAttempts) {
         if (ship->getFuel() <= 1 && overRun == 0) {
             UIManager::pirateLowFuelWarning();
             overRun++;
         }
 
         UIManager::selectAction();
-        std::cin >> decision;
-        std::transform(decision.begin(), decision.end(), decision.begin(), ::tolower);
+        std::getline(std::cin, decision);
 
-        if ((decision == "run" || decision == "r" || decision == "k") && ship->getFuel() > 1) {
-            if (handleRun(ship)) break;
-        } else if (decision == "fight" || decision == "f" || decision == "s") {
-            if (handleFight(ship)) break;
-        } else if (decision == "negotiate" || decision == "n" || decision == "p") {
-            if (handleNegotiate(ship)) break;
-        } else {
-            UIManager::invalidInput();
+        Action action = parseActionInput(decision);
+        switch (action) {
+            case Action::Run:
+                if (ship->getFuel() > 1 && handleRun(ship)) return;
+                break;
+            case Action::Fight:
+                if (handleFight(ship)) return;
+                break;
+            case Action::Negotiate:
+                if (handleNegotiate(ship)) return;
+                break;
+            default:
+                UIManager::invalidInput();
+                attempts++;
+                break;
         }
-
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
+
+    std::cout << "Too many invalid attempts. Skipping event.\n";
 }
 
 bool spacePiratesEvent::handleRun(const std::shared_ptr<Ship>& ship) {
@@ -88,5 +106,4 @@ bool spacePiratesEvent::handleNegotiate(const std::shared_ptr<Ship>& ship) {
 void spacePiratesEvent::consumptionFuel(const std::shared_ptr<Ship>& ship) {
     ship->setFuel(ship->getFuel() - kFuelConsumption);
 }
-
 
