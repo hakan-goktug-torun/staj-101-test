@@ -7,7 +7,7 @@
 
 class GameEngine {
 public:
-    bool start(const std::shared_ptr<Ship>& ship);
+    int start(const std::shared_ptr<Ship>& ship);
     void printStatus(const std::shared_ptr<Ship>& ship);
 
 };
