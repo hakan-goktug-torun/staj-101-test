@@ -5,6 +5,7 @@
 #ifndef SPACEGAMES_CROSSTHEBELTEVENT_H
 #define SPACEGAMES_CROSSTHEBELTEVENT_H
 
+#pragma once
 #include <memory>
 #include "events.h"
 

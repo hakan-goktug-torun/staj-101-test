@@ -1,8 +1,9 @@
 #include "gameengine.h"
 #include "eventmanager.h"
 #include "scoreservice.h"
+#include "../ships/ship.h"
 #include <iostream>
-#include <algorithm> // transform için
+#include <algorithm>
 
 void GameEngine::printStatus(const std::shared_ptr<Ship>& ship) {
     std::cout << "\n=== Ship Status ===\n";

@@ -4,6 +4,7 @@
 #ifndef SPACEGAMES_ABANDONEDPLANETEVENT_H
 #define SPACEGAMES_ABANDONEDPLANETEVENT_H
 
+#pragma once
 #include <memory>
 #include "events.h"
 

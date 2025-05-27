@@ -1,4 +1,7 @@
 #include "shipfactory.h"
+#include "../ships/fastship.h"
+#include "../ships/strongship.h"
+#include "../ships/normalship.h"
 #include <algorithm>
 
 std::shared_ptr<Ship> ShipFactory::createShip(ShipType type) {

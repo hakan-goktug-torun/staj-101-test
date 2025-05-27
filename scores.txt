@@ -19,3 +19,4 @@ hakan: 1700
 hakan: 1535
 hakan: 1535
 hakan: 1285
+hakan: 270

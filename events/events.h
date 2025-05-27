@@ -5,9 +5,10 @@
 #ifndef SPACEGAMES_EVENTS_H
 #define SPACEGAMES_EVENTS_H
 
-#include <iostream>
+#pragma once
 #include <memory>
-#include "ship.h"
+#include <iostream>
+#include "../ships/ship.h"
 
 class Events {
 public:

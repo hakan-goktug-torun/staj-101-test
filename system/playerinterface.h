@@ -1,9 +1,10 @@
 #ifndef SPACEGAMES_PLAYERINTERFACE_H
 #define SPACEGAMES_PLAYERINTERFACE_H
 
+#pragma once
 #include <memory>
 #include <string>
-#include "ship.h"
+#include "../ships/ship.h"
 
 class PlayerInterface {
 public:

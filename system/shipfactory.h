@@ -1,11 +1,10 @@
 #ifndef SPACEGAMES_SHIPFACTORY_H
 #define SPACEGAMES_SHIPFACTORY_H
 
+#pragma once
 #include <memory>
-#include "ship.h"
-#include "fastship.h"
-#include "strongship.h"
-#include "normalship.h"
+#include <string>
+#include "../ships/ship.h"
 
 enum class ShipType { Strong, Fast, Normal, Invalid };
 

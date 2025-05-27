@@ -1,9 +1,9 @@
 #ifndef SPACEGAMES_GAMEENGINE_H
 #define SPACEGAMES_GAMEENGINE_H
 
-#include "ship.h"
+#pragma once
 #include <memory>
-#include <string>
+#include "../ships/ship.h"
 
 class GameEngine {
 public:

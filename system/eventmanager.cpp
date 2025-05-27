@@ -1,5 +1,7 @@
 #include "eventmanager.h"
-#include <iostream>
+#include "../events/abandonedplanetevent.h"
+#include "../events/crossthebeltevent.h"
+#include "../events/spacepiratesevent.h"
 #include <cstdlib>
 
 void EventManager::triggerRandomEvent(const std::shared_ptr<Ship>& ship) {

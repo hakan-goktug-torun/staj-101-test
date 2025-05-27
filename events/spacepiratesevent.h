@@ -5,6 +5,7 @@
 #ifndef SPACEGAMES_SPACEPIRATESEVENT_H
 #define SPACEGAMES_SPACEPIRATESEVENT_H
 
+#pragma once
 #include <memory>
 #include "events.h"
 

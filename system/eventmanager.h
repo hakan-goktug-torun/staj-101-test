@@ -1,11 +1,10 @@
 #ifndef SPACEGAMES_EVENTMANAGER_H
 #define SPACEGAMES_EVENTMANAGER_H
 
+#pragma once
 #include <memory>
-#include "ship.h"
-#include "spacepiratesevent.h"
-#include "crossthebeltevent.h"
-#include "abandonedplanetevent.h"
+#include "../ships/ship.h"
+#include "../events/events.h"
 
 class EventManager {
 public:

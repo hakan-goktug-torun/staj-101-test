@@ -1,11 +1,12 @@
 #ifndef SPACEGAMES_SCORESERVICE_H
 #define SPACEGAMES_SCORESERVICE_H
 
-#include <map>
+#pragma once
 #include <memory>
 #include <string>
+#include "../ships/ship.h"
+#include <map>
 #include <tuple>
-#include "ship.h"
 
 
 class ScoreService {

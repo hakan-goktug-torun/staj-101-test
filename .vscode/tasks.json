@@ -8,16 +8,19 @@
             "args": [
                 "-std=c++17",
                 "main.cpp",
-                "playerinterface.cpp",
-                "gameengine.cpp",
-                "eventmanager.cpp",
-                "spacepiratesevent.cpp",
-                "abandonedplanetevent.cpp",
-                "crossthebeltevent.cpp",
-                "shipfactory.cpp",
-                "scoreservice.cpp",
+                "system/playerinterface.cpp",
+                "system/gameengine.cpp",
+                "system/eventmanager.cpp",
+                "system/shipfactory.cpp",
+                "system/scoreservice.cpp",
+                "events/spacepiratesevent.cpp",
+                "events/abandonedplanetevent.cpp",
+                "events/crossthebeltevent.cpp",
                 "-o",
-                "spacegame.exe"
+                "spacegame.exe",
+                "-Isystem",
+                "-Ievents",
+                "-Iships"
             ],
             "group": {
                 "kind": "build",

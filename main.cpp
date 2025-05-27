@@ -1,8 +1,9 @@
 #include <iostream>
 #include <ctime>
-#include "playerinterface.h"
-#include "gameengine.h"
-#include "scoreservice.h"
+
+#include "system/playerinterface.h"
+#include "system/gameengine.h"
+#include "system/scoreservice.h"
 
 int main() {
     srand(static_cast<unsigned>(time(nullptr)));
