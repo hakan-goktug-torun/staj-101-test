@@ -80,12 +80,13 @@ bool spacePiratesEvent::handleFight(const std::shared_ptr<Ship>& ship) {
     }
 
     int chance = rand() % 101;
-    if (chance < kFightSuccessRate) {
+    if (chance >= kFightSuccessRate) {
+    UIManager::fightSuccess();
+    } else {
         ship->takeDamage(ship->getDamage());
         UIManager::fightFail(ship->getDamage(), ship->getHealth());
-    } else {
-        UIManager::fightSuccess();
     }
+
     return true;
 }
 
