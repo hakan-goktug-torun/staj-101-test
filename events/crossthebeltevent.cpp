@@ -11,7 +11,6 @@ void crossTheBeltEvent::manageEvents(std::shared_ptr<Ship> ship) {
         int damage = ship->getAsDamage();
         ship->takeDamage(damage);
         UIManager::get().asteroidDamage(damage);
-        UIManager::get().printStatus(ship);
     }
 }
 

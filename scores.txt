@@ -24,3 +24,6 @@ hakan: 870
 hakan: 570
 hakan: 1185
 hakan: 1435
+hakan: 570
+goktug: 1220
+goktug: 720

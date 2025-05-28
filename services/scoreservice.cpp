@@ -13,10 +13,6 @@ int ScoreService::calculate(const std::shared_ptr<Ship>& ship) {
     return (ship->getFuel() * 5) + (ship->getHealth() * 10) + (ship->getBalance() * 10);
 }
 
-void ScoreService::display(int score) {
-    UIManager::get().printCongratulations(score);
-}
-
 void ScoreService::saveToFile(const std::string& playerName, int score) {
     std::ofstream file("scores.txt", std::ios::app);
     if (file.is_open()) {
@@ -38,9 +34,9 @@ std::map<std::string, int> ScoreService::loadScores() {
         std::string name;
         int score;
         if (std::getline(iss, name, ':') && iss >> score) {
-            name.erase(name.find_last_not_of(" \t\r\n") + 1);
-            name.erase(0, name.find_first_not_of(" \t\r\n"));
-            scores[name] = std::max(scores[name], score);
+        name.erase(0, name.find_first_not_of(" \t\r\n"));
+        name.erase(name.find_last_not_of(" \t\r\n") + 1);
+        scores[name] = std::max(scores[name], score);
         }
     }
 

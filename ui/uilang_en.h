@@ -11,12 +11,13 @@ public:
     }
 
     void printThanks() override {
-        std::cout << BOLD << GREEN
-        << "\n╔════════════════════════════╗\n"
-        << "║     Thanks for playing!      ║\n"
-        << "╚════════════════════════════╝\n"
-        << RESET;
+        std::cout << BOLD << GREEN;
+        printSlow("\n╔════════════════════════════╗\n");
+        printSlow("║     Thanks for playing!    ║\n");
+        printSlow("╚════════════════════════════╝\n");
+        std::cout << RESET;
     }
+
 
     void displayTop5Header() override {
         std::cout << BOLD << CYAN << "\n=== TOP 5 SCORES ===\n" << RESET;
@@ -102,10 +103,12 @@ public:
 
     void pirateIncoming() override {
         std::cout << BOLD << RED;
-        std::cout << "\n*************************\n";
-        std::cout << "  SPACE PIRATES INCOMING!\n";
-        std::cout << "*************************\n" << RESET;
+        printSlow("\n*************************\n");
+        printSlow("  SPACE PIRATES INCOMING!\n");
+        printSlow("*************************\n");
+        std::cout << RESET;
     }
+
 
     void selectAction() override {
         std::cout << "Run (r), Fight (f), Negotiate (n)?\n> ";
@@ -132,8 +135,13 @@ public:
     }
 
     void fightFail(int damage, int remainingHealth) override {
-        std::cout << RED << "You lost the fight! Took " << damage << " damage. Remaining health: " << remainingHealth << "\n" << RESET;
+        std::cout << RED;
+        printSlow("You lost the fight!\n");
+        printSlow("Damage: " + std::to_string(damage) + 
+                ", Health left: " + std::to_string(remainingHealth) + "\n");
+        std::cout << RESET;
     }
+
 
     void fightBlocked() override {
         std::cout << "Your ship can't take any more damage!\n";
@@ -148,8 +156,13 @@ public:
     }
 
     void abandonedPlanetDiscovered() override {
-        std::cout << "You discovered an abandoned planet!\n";
+        std::cout << YELLOW;
+        printSlow("You discovered an abandoned planet...\n", 40);
+        std::this_thread::sleep_for(std::chrono::milliseconds(400));
+        printSlow("Silence surrounds the place...\n", 40);
+        std::cout << RESET;
     }
+
 
     void abandonedPlanetFoundCoins(int coins) override {
         std::cout << "You found " << coins << " coins on the abandoned planet!\n";
@@ -173,5 +186,40 @@ public:
     void printEventDivider() override {
         std::cout << BOLD << BLUE << "\n――――  New Space Anomaly Detected  ――――\n" << RESET;
     }
+    
+    void printIntroArt() override {
+    std::cout << BOLD << CYAN;
+    printSlow(R"(
+        ___
+     __/___\__
+   _|         |_
+  |  ___   ___  |
+  | |___| |___| |
+   \    |_|    /
+    \_________/
+      /  |  \
+     |   |   |
+     |___|___|
+     [=======]
+ Welcome Captain!
+    )", 1);
+    std::cout << RESET;
+}
 
+
+    void printGameRules() override {
+        std::cout << BOLD << MAGENTA;
+        printSlow("\n╔════════════════════════════════════════╗\n");
+        printSlow("║              GAME RULES                ║\n");
+        printSlow("╠════════════════════════════════════════╣\n");
+        printSlow("║ • Each round, a random event occurs.   ║\n");
+        printSlow("║ • If fuel hits zero, you can't move.   ║\n");
+        printSlow("║ • If health reaches zero, you lose.    ║\n");
+        printSlow("║ • Your choices shape your journey.     ║\n");
+        printSlow("╚════════════════════════════════════════╝\n");
+        std::cout << RESET;
+
+        std::cout << "\nPress ENTER to continue...";
+        std::cin.ignore();
+    }
 };

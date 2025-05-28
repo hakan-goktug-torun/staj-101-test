@@ -7,12 +7,12 @@
 #include "../ships/ship.h"
 #include <map>
 #include <tuple>
+
 #include <nlohmann/json.hpp>
 
 class ScoreService {
 public:
     static int calculate(const std::shared_ptr<Ship>& ship);
-    static void display(int score);
     static void saveToFile(const std::string& playerName, int score);
     static std::map<std::string, int> loadScores();
     static void displayTop5();

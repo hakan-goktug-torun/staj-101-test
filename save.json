@@ -1,6 +1,6 @@
 {
-    "balance": 10,
-    "fuel": 67,
-    "health": 100,
+    "balance": 0,
+    "fuel": 1,
+    "health": 40,
     "type": "Fast"
 }

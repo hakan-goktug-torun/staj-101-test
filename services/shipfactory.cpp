@@ -4,6 +4,7 @@
 #include "../ships/normalship.h"
 #include <algorithm>
 #include <unordered_map>
+#include <iostream>  // eklendi: uyarı mesajı için
 
 std::shared_ptr<Ship> ShipFactory::createShip(ShipType type) {
     int fuel = 100, health = 100, balance = 0;
@@ -54,5 +55,10 @@ ShipType ShipFactory::StringToShipType(const std::string& typeStr) {
     std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
 
     auto it = map.find(lower);
-    return it != map.end() ? it->second : ShipType::Invalid;
+    if (it != map.end()) {
+        return it->second;
+    }
+
+    std::cerr << "Warning: Invalid ship type string '" << typeStr << "'\n";
+    return ShipType::Invalid;
 }

@@ -42,6 +42,9 @@ public:
     virtual void abandonedPlanetPirates() = 0;
     virtual void printWelcomeMenu() = 0;
     virtual void printEventDivider() = 0;
+    virtual void printIntroArt() = 0;
+    virtual void printGameRules() = 0;
+
 
     inline void printSlow(const std::string& text, int delayMs = 30) {
     for (char ch : text) {

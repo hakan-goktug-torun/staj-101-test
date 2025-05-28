@@ -10,12 +10,13 @@ public:
     }
 
     void printThanks() override {   
-            std::cout << BOLD << GREEN
-            << "\n╔════════════════════════════╗\n"
-            << "║Oynadığın için teşekkürler!  ║\n"
-            << "╚════════════════════════════╝\n"
-            << RESET;
+        std::cout << BOLD << GREEN;
+        printSlow("\n╔════════════════════════════╗\n");
+        printSlow("║Oynadığın için teşekkürler! ║\n");
+        printSlow("╚════════════════════════════╝\n");
+        std::cout << RESET;
     }
+
 
     void displayTop5Header() override {
         std::cout << BOLD << CYAN << "\n=== EN İYİ 5 SKOR ===\n" << RESET;
@@ -101,10 +102,12 @@ public:
 
     void pirateIncoming() override {
         std::cout << BOLD << RED;
-        std::cout << "\n*************************\n";
-        std::cout << "  UZAY KORSANLARI GELİYOR!\n";
-        std::cout << "*************************\n" << RESET;
+        printSlow("\n*************************\n");
+        printSlow("  UZAY KORSANLARI GELİYOR!\n");
+        printSlow("*************************\n");
+        std::cout << RESET;
     }
+
 
     void selectAction() override {
         std::cout << "Kaç (k), Savaş (s), Pazarlık (p)?\n> ";
@@ -131,8 +134,13 @@ public:
     }
 
     void fightFail(int damage, int remainingHealth) override {
-        std::cout << RED << "Savaşı kaybettin! " << damage << " hasar aldın. Kalan can: " << remainingHealth << "\n" << RESET;
+        std::cout << RED;
+        printSlow("Savaşı kaybettin!\n");
+        printSlow("Hasar: " + std::to_string(damage) + 
+                ", Kalan can: " + std::to_string(remainingHealth) + "\n");
+        std::cout << RESET;
     }
+
 
     void fightBlocked() override {
         std::cout << "Geminin daha fazla hasar alacak durumu yok!\n";
@@ -147,8 +155,13 @@ public:
     }
 
     void abandonedPlanetDiscovered() override {
-        std::cout << "Terkedilmiş bir gezegen keşfettin!\n";
+        std::cout << YELLOW;
+        printSlow("Terkedilmiş bir gezegen keşfettin...\n", 40);
+        std::this_thread::sleep_for(std::chrono::milliseconds(400));
+        printSlow("Gizemli bir sessizlik hakim...\n", 40);
+        std::cout << RESET;
     }
+
 
     void abandonedPlanetFoundCoins(int coins) override {
         std::cout << "Terkedilmiş gezegende " << coins << " altın buldun!\n";
@@ -172,4 +185,42 @@ public:
     void printEventDivider() override {
     std::cout << BOLD << BLUE << "\n――――  Yeni Uzay Anomalisi!  ――――\n" << RESET;
     }
+
+    void printIntroArt() override {
+    std::cout << BOLD << CYAN;
+    printSlow(R"(
+        ___
+     __/___\__
+   _|         |_
+  |  ___   ___  |
+  | |___| |___| |
+   \    |_|    /
+    \_________/
+      /  |  \
+     |   |   |
+     |___|___|
+     [=======]
+ Hoş Geldin Kaptan!
+    )", 1);
+    std::cout << RESET;
+}
+
+
+        void printGameRules() override {
+        std::cout << BOLD << MAGENTA;
+        printSlow("\n╔════════════════════════════════════════╗\n");
+        printSlow("║              OYUN KURALLARI            ║\n");
+        printSlow("╠════════════════════════════════════════╣\n");
+        printSlow("║ • Her turda rastgele bir olay yaşanır. ║\n");
+        printSlow("║ • Yakıt sıfır olursa hareket edemezsin.║\n");
+        printSlow("║ • Canın sıfır olursa oyun biter.       ║\n");
+        printSlow("║ • Kararların geminin kaderini belirler.║\n");
+        printSlow("╚════════════════════════════════════════╝\n");
+        std::cout << RESET;
+
+        std::cout << "\nDevam etmek için ENTER'a bas...";
+        std::cin.ignore();
+    }
+
+
 };
