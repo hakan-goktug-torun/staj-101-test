@@ -9,30 +9,29 @@
 #include "../services/scoreservice.h"
 
 void handleEndOfGame(const std::shared_ptr<Ship>& ship, const std::string& shipTypeStr, bool saveOnly) {
-    if (ship->getFuel() > 0 && ship->getHealth() > 0) {
-        if (PlayerInterface::askToSaveGame()) {
-            ScoreService::saveGameJSON(ship, shipTypeStr);
-        }
+    if (PlayerInterface::askToSaveGame()) {
+        ScoreService::saveGameJSON(ship, shipTypeStr);
+    }
 
-        if (!saveOnly) {
-            std::string playerName;
+    int finalScore = ScoreService::calculate(ship);
+
+    if (!saveOnly) {
+        std::string playerName;
+        UIManager::get().promptName();
+        std::getline(std::cin, playerName);
+
+        while (playerName.empty()) {
+            UIManager::get().invalidInput();
             UIManager::get().promptName();
             std::getline(std::cin, playerName);
-
-            while (playerName.empty()) {
-                UIManager::get().invalidInput();
-                UIManager::get().promptName();
-                std::getline(std::cin, playerName);
-            }
-
-            int finalScore = ScoreService::calculate(ship);
-            ScoreService::saveToFile(playerName, finalScore);
-            UIManager::get().printCongratulations(finalScore);
-            ScoreService::displayTop5();
         }
 
-        UIManager::get().printThanks();
+        ScoreService::saveToFile(playerName, finalScore);
+        UIManager::get().printCongratulations(finalScore);
+        ScoreService::displayTop5();
     }
+
+    UIManager::get().printThanks();
 }
 
 int main() {
@@ -55,7 +54,7 @@ int main() {
     if (!ship) return 0;
 
     GameEngine engine;
-    int gameResult = engine.start(ship); // 1 = tamamlandı, 0 = yakıt bitti, -1 = kullanıcı çıkışı
+    int gameResult = engine.start(ship); // 1 = tamamlandı, 0 = yakıt veya can bitti, -1 = oyuncu çıktı
 
     if (gameResult == -1 || gameResult == 0) {
         handleEndOfGame(ship, shipTypeStr, true);  // sadece kayıt, skor yok

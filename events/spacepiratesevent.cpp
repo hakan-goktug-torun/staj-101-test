@@ -31,7 +31,7 @@ void spacePiratesEvent::spacePirates(const std::shared_ptr<Ship>& ship) {
     UIManager::get().pirateIncoming();
 
     while (attempts < maxAttempts) {
-        if (ship->getFuel() <= 1 && overRun == 0) {
+        if (ship->getFuel() < kFuelConsumption && overRun == 0) {
             UIManager::get().pirateLowFuelWarning();
             overRun++;
         }
@@ -42,7 +42,7 @@ void spacePiratesEvent::spacePirates(const std::shared_ptr<Ship>& ship) {
         Action action = parseActionInput(decision);
         switch (action) {
             case Action::Run:
-                if (ship->getFuel() > 1 && handleRun(ship)) return;
+                if (ship->getFuel() >= kFuelConsumption && handleRun(ship)) return;
                 break;
             case Action::Fight:
                 if (handleFight(ship)) return;
@@ -107,5 +107,3 @@ bool spacePiratesEvent::handleNegotiate(const std::shared_ptr<Ship>& ship) {
 void spacePiratesEvent::consumptionFuel(const std::shared_ptr<Ship>& ship) {
     ship->setFuel(ship->getFuel() - kFuelConsumption);
 }
-
-
