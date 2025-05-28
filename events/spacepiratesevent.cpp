@@ -28,15 +28,15 @@ void spacePiratesEvent::spacePirates(const std::shared_ptr<Ship>& ship) {
     int attempts = 0;
     constexpr int maxAttempts = 3;
 
-    UIManager::pirateIncoming();
+    UIManager::get().pirateIncoming();
 
     while (attempts < maxAttempts) {
         if (ship->getFuel() <= 1 && overRun == 0) {
-            UIManager::pirateLowFuelWarning();
+            UIManager::get().pirateLowFuelWarning();
             overRun++;
         }
 
-        UIManager::selectAction();
+        UIManager::get().selectAction();
         std::getline(std::cin, decision);
 
         Action action = parseActionInput(decision);
@@ -51,7 +51,7 @@ void spacePiratesEvent::spacePirates(const std::shared_ptr<Ship>& ship) {
                 if (handleNegotiate(ship)) return;
                 break;
             default:
-                UIManager::invalidInput();
+                UIManager::get().invalidInput();
                 attempts++;
                 break;
         }
@@ -63,28 +63,28 @@ void spacePiratesEvent::spacePirates(const std::shared_ptr<Ship>& ship) {
 bool spacePiratesEvent::handleRun(const std::shared_ptr<Ship>& ship) {
     int chance = rand() % 101;
     if (ship->getPercEscape() >= chance) {
-        UIManager::escapedPirates();
+        UIManager::get().escapedPirates();
     } else {
-        UIManager::failedEscape();
+        UIManager::get().failedEscape();
     }
 
     consumptionFuel(ship);
-    UIManager::pirateFuelStatus(ship->getFuel());
+    UIManager::get().pirateFuelStatus(ship->getFuel());
     return true;
 }
 
 bool spacePiratesEvent::handleFight(const std::shared_ptr<Ship>& ship) {
     if (ship->getHealth() < ship->getDamage()) {
-        UIManager::fightBlocked();
+        UIManager::get().fightBlocked();
         return false;
     }
 
     int chance = rand() % 101;
     if (chance >= kFightSuccessRate) {
-    UIManager::fightSuccess();
+        UIManager::get().fightSuccess();
     } else {
         ship->takeDamage(ship->getDamage());
-        UIManager::fightFail(ship->getDamage(), ship->getHealth());
+        UIManager::get().fightFail(ship->getDamage(), ship->getHealth());
     }
 
     return true;
@@ -96,10 +96,10 @@ bool spacePiratesEvent::handleNegotiate(const std::shared_ptr<Ship>& ship) {
 
     if (ship->getBalance() >= cost) {
         ship->setBalance(ship->getBalance() - cost);
-        UIManager::negotiationSuccess(cost, ship->getBalance());
+        UIManager::get().negotiationSuccess(cost, ship->getBalance());
         return true;
     } else {
-        UIManager::negotiationFail();
+        UIManager::get().negotiationFail();
         return false;
     }
 }
@@ -107,4 +107,5 @@ bool spacePiratesEvent::handleNegotiate(const std::shared_ptr<Ship>& ship) {
 void spacePiratesEvent::consumptionFuel(const std::shared_ptr<Ship>& ship) {
     ship->setFuel(ship->getFuel() - kFuelConsumption);
 }
+
 

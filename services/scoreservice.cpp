@@ -14,7 +14,7 @@ int ScoreService::calculate(const std::shared_ptr<Ship>& ship) {
 }
 
 void ScoreService::display(int score) {
-    UIManager::printCongratulations(score);
+    UIManager::get().printCongratulations(score);
 }
 
 void ScoreService::saveToFile(const std::string& playerName, int score) {
@@ -22,9 +22,9 @@ void ScoreService::saveToFile(const std::string& playerName, int score) {
     if (file.is_open()) {
         file << playerName << ": " << score << "\n";
         file.close();
-        UIManager::scoreSaved();
+        UIManager::get().scoreSaved();
     } else {
-        UIManager::gameSaveFailed();
+        UIManager::get().gameSaveFailed();
     }
 }
 
@@ -55,7 +55,7 @@ void ScoreService::displayTop5() {
         return a.second > b.second;
     });
 
-    UIManager::displayTop5Header();
+    UIManager::get().displayTop5Header();
     int count = 0;
     for (const auto& [name, score] : scoreVec) {
         std::cout << name << ": " << score << "\n";
@@ -69,9 +69,9 @@ void ScoreService::saveGame(const std::shared_ptr<Ship>& ship, const std::string
     if (file.is_open()) {
         file << shipType << " " << ship->getFuel() << " " << ship->getHealth() << " " << ship->getBalance() << "\n";
         file.close();
-        UIManager::gameSaved();
+        UIManager::get().gameSaved();
     } else {
-        UIManager::gameSaveFailed();
+        UIManager::get().gameSaveFailed();
     }
 }
 
@@ -81,10 +81,10 @@ std::tuple<std::string, int, int, int> ScoreService::loadGame() {
     int fuel, health, balance;
 
     if (file.is_open() && file >> type >> fuel >> health >> balance) {
-        UIManager::gameLoaded();
+        UIManager::get().gameLoaded();
         return {type, fuel, health, balance};
     } else {
-        UIManager::loadFailed();
+        UIManager::get().loadFailed();
         return {"", 0, 0, 0};
     }
 }
@@ -100,16 +100,16 @@ void ScoreService::saveGameJSON(const std::shared_ptr<Ship>& ship, const std::st
     if (file.is_open()) {
         file << j.dump(4);
         file.close();
-        UIManager::gameSaved();
+        UIManager::get().gameSaved();
     } else {
-        UIManager::gameSaveFailed();
+        UIManager::get().gameSaveFailed();
     }
 }
 
 std::tuple<std::string, int, int, int> ScoreService::loadGameJSON() {
     std::ifstream file("save.json");
     if (!file.is_open()) {
-        UIManager::loadFailed();
+        UIManager::get().loadFailed();
         return {"", 0, 0, 0};
     }
 
@@ -120,13 +120,12 @@ std::tuple<std::string, int, int, int> ScoreService::loadGameJSON() {
         int fuel = j.at("fuel").get<int>();
         int health = j.at("health").get<int>();
         int balance = j.at("balance").get<int>();
-        UIManager::gameLoaded();
+        UIManager::get().gameLoaded();
         return {type, fuel, health, balance};
     }
     catch (const std::exception& e) {
-    std::cerr << "JSON Error: " << e.what() << std::endl;
-    UIManager::loadFailed();
-    return {"", 0, 0, 0};
+        std::cerr << "JSON Error: " << e.what() << std::endl;
+        UIManager::get().loadFailed();
+        return {"", 0, 0, 0};
     }
-
 }

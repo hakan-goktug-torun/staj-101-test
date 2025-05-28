@@ -3,16 +3,15 @@
 #include "../ui/uimanager.h"
 
 void abandonedPlanetEvent::manageEvents(std::shared_ptr<Ship> ship) {
-    UIManager::abandonedPlanetDiscovered();
+    UIManager::get().abandonedPlanetDiscovered();
 
     int random = rand() % 101;
     if (random >= 50) {
         ship->setBalance(ship->getBalance() + kCoinReward);
-        UIManager::abandonedPlanetFoundCoins(kCoinReward);
+        UIManager::get().abandonedPlanetFoundCoins(kCoinReward);
     } else {
-        UIManager::abandonedPlanetPirates();
+        UIManager::get().abandonedPlanetPirates();
         spacePiratesEvent pirates;
         pirates.manageEvents(ship);
     }
 }
-// fazlalık fonksiyonlar silindi

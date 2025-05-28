@@ -21,13 +21,13 @@ std::shared_ptr<Ship> PlayerInterface::promptForShip(std::string& outType) {
             else if (choice == "n") outType = "Normal";
             return ship;
         }
-        UIManager::invalidInput();
-        UIManager::chooseShipPrompt();
+        UIManager::get().invalidInput();
+        UIManager::get().chooseShipPrompt();
     }
 }
 
 std::shared_ptr<Ship> PlayerInterface::loadOrCreateShip(std::string& outType) {
-    UIManager::printWelcomeMenu();
+    UIManager::get().printWelcomeMenu();
 
     std::string input;
     std::getline(std::cin, input);
@@ -41,19 +41,19 @@ std::shared_ptr<Ship> PlayerInterface::loadOrCreateShip(std::string& outType) {
         outType = type;
         return ShipFactory::createShipFromSave(type, fuel, health, balance);
     } else {
-        UIManager::chooseShipPrompt();
+        UIManager::get().chooseShipPrompt();
         return promptForShip(outType);
     }
 }
 
 std::string PlayerInterface::askPlayerName() {
     std::string name;
-    UIManager::promptName();
+    UIManager::get().promptName();
     std::getline(std::cin, name);
 
     while (name.empty()) {
-        UIManager::invalidInput();
-        UIManager::promptName();
+        UIManager::get().invalidInput();
+        UIManager::get().promptName();
         std::getline(std::cin, name);
     }
     return name;
@@ -61,7 +61,7 @@ std::string PlayerInterface::askPlayerName() {
 
 bool PlayerInterface::askToSaveGame() {
     std::string saveChoice;
-    UIManager::askToSave();
+    UIManager::get().askToSave();
     std::getline(std::cin, saveChoice);
 
     std::transform(saveChoice.begin(), saveChoice.end(), saveChoice.begin(), ::tolower);

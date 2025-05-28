@@ -10,27 +10,27 @@ int GameEngine::start(const std::shared_ptr<Ship>& ship) {
 
     for (int i = 0; i < 5; ++i) {
         eventManager.triggerRandomEvent(ship);
-        UIManager::printStatus(ship);
+        UIManager::get().printStatus(ship);
 
         if (ship->getFuel() <= 1) {
-            UIManager::outOfFuel();
-            return 0; // yakıt bitti
+            UIManager::get().outOfFuel();
+            return 0;
         }
 
         std::string answer;
         while (true) {
-            UIManager::promptContinue();
+            UIManager::get().promptContinue();
             std::getline(std::cin, answer);
             std::transform(answer.begin(), answer.end(), answer.begin(), ::tolower);
 
             if (answer == "y" || answer == "yes" || answer == "evet" || answer == "e") break;
             if (answer == "n" || answer == "no" || answer == "hayır" || answer == "h") {
-                UIManager::printThanks();
-                return -1; // kullanıcı çıktı
+                UIManager::get().printThanks();
+                return -1;
             }
-            UIManager::invalidInput();
+            UIManager::get().invalidInput();
         }
     }
 
-    return 1; // normal bitiş
+    return 1;
 }

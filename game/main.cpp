@@ -2,6 +2,8 @@
 #include <ctime>
 #include <windows.h>
 #include "../ui/uimanager.h"
+#include "../ui/uilang_tr.h"
+#include "../ui/uilang_en.h"
 #include "playerinterface.h"
 #include "gameengine.h"
 #include "../services/scoreservice.h"
@@ -14,22 +16,22 @@ void handleEndOfGame(const std::shared_ptr<Ship>& ship, const std::string& shipT
 
         if (!saveOnly) {
             std::string playerName;
-            UIManager::promptName();
+            UIManager::get().promptName();
             std::getline(std::cin, playerName);
 
             while (playerName.empty()) {
-                UIManager::invalidInput();
-                UIManager::promptName();
+                UIManager::get().invalidInput();
+                UIManager::get().promptName();
                 std::getline(std::cin, playerName);
             }
 
             int finalScore = ScoreService::calculate(ship);
             ScoreService::saveToFile(playerName, finalScore);
-            UIManager::printCongratulations(finalScore);
+            UIManager::get().printCongratulations(finalScore);
             ScoreService::displayTop5();
         }
 
-        UIManager::printThanks();
+        UIManager::get().printThanks();
     }
 }
 
@@ -37,11 +39,16 @@ int main() {
     SetConsoleOutputCP(65001);
     srand(static_cast<unsigned>(time(nullptr)));
 
-    UIManager::promptLanguage();
     std::string langChoice;
-    std::cin >> langChoice;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    UIManager::lang = UIManager::parseLanguageInput(langChoice);
+    std::cout << "Select Language / Dil Seçin: (En/Tr): ";
+    std::getline(std::cin, langChoice);
+    std::transform(langChoice.begin(), langChoice.end(), langChoice.begin(), ::tolower);
+
+    if (langChoice == "tr" || langChoice == "türkçe" || langChoice == "turkish") {
+        UIManager::setLanguage(std::make_unique<UILangTR>());
+    } else {
+        UIManager::setLanguage(std::make_unique<UILangEN>());
+    }
 
     std::string shipTypeStr;
     std::shared_ptr<Ship> ship = PlayerInterface::loadOrCreateShip(shipTypeStr);

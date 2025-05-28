@@ -7,10 +7,10 @@
 
 void EventManager::triggerRandomEvent(const std::shared_ptr<Ship>& ship) {
     if (ship->getFuel() <= 0) {
-        UIManager::abandonedPlanetDiscovered();
+        UIManager::get().abandonedPlanetDiscovered();
         return;
-    }   
-     
+    }
+
     int eventType = rand() % 3;
     std::unique_ptr<Events> event;
 
@@ -21,6 +21,7 @@ void EventManager::triggerRandomEvent(const std::shared_ptr<Ship>& ship) {
     }
 
     if (event) {
-        event->manageEvents(ship);  // sadece tek fonksiyon
+        event->manageEvents(ship);
     }
 }
+
