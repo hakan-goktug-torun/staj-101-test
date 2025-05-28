@@ -5,6 +5,9 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 int ScoreService::calculate(const std::shared_ptr<Ship>& ship) {
     return (ship->getFuel() * 5) + (ship->getHealth() * 10) + (ship->getBalance() * 10);
@@ -35,7 +38,8 @@ std::map<std::string, int> ScoreService::loadScores() {
         std::string name;
         int score;
         if (std::getline(iss, name, ':') && iss >> score) {
-            name.erase(std::remove_if(name.begin(), name.end(), [](char c) { return std::isspace(static_cast<unsigned char>(c)); }), name.end());
+            name.erase(name.find_last_not_of(" \t\r\n") + 1);
+            name.erase(0, name.find_first_not_of(" \t\r\n"));
             scores[name] = std::max(scores[name], score);
         }
     }
@@ -83,4 +87,46 @@ std::tuple<std::string, int, int, int> ScoreService::loadGame() {
         UIManager::loadFailed();
         return {"", 0, 0, 0};
     }
+}
+
+void ScoreService::saveGameJSON(const std::shared_ptr<Ship>& ship, const std::string& shipType) {
+    json j;
+    j["type"] = shipType;
+    j["fuel"] = ship->getFuel();
+    j["health"] = ship->getHealth();
+    j["balance"] = ship->getBalance();
+
+    std::ofstream file("save.json");
+    if (file.is_open()) {
+        file << j.dump(4);
+        file.close();
+        UIManager::gameSaved();
+    } else {
+        UIManager::gameSaveFailed();
+    }
+}
+
+std::tuple<std::string, int, int, int> ScoreService::loadGameJSON() {
+    std::ifstream file("save.json");
+    if (!file.is_open()) {
+        UIManager::loadFailed();
+        return {"", 0, 0, 0};
+    }
+
+    json j;
+    try {
+        file >> j;
+        std::string type = j.at("type").get<std::string>();
+        int fuel = j.at("fuel").get<int>();
+        int health = j.at("health").get<int>();
+        int balance = j.at("balance").get<int>();
+        UIManager::gameLoaded();
+        return {type, fuel, health, balance};
+    }
+    catch (const std::exception& e) {
+    std::cerr << "JSON Error: " << e.what() << std::endl;
+    UIManager::loadFailed();
+    return {"", 0, 0, 0};
+    }
+
 }

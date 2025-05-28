@@ -47,7 +47,7 @@ inline void scoreSaved() {
 }
 
 inline void gameSaved() {
-    std::cout << "Oyun 'save.txt' dosyasına kaydedildi!\n";
+    std::cout << "Oyun 'save.json' dosyasına kaydedildi!\n";
 }
 
 inline void gameSaveFailed() {

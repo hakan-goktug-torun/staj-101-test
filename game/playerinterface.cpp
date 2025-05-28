@@ -36,7 +36,7 @@ std::shared_ptr<Ship> PlayerInterface::loadOrCreateShip(std::string& outType) {
     ss >> menuChoice;
 
     if (menuChoice == 2) {
-        auto [type, fuel, health, balance] = ScoreService::loadGame();
+        auto [type, fuel, health, balance] = ScoreService::loadGameJSON();
         if (type == "") return nullptr;
         outType = type;
         return ShipFactory::createShipFromSave(type, fuel, health, balance);

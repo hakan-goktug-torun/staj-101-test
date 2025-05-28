@@ -47,7 +47,7 @@ inline void scoreSaved() {
 }
 
 inline void gameSaved() {
-    std::cout << "Game saved to save.txt!\n";
+    std::cout << "Game saved to save.json!\n";
 }
 
 inline void gameSaveFailed() {
@@ -139,7 +139,7 @@ inline void abandonedPlanetPirates() {
 }
 
 inline void printWelcomeMenu() {
-    std::cout << "Welcome to the Space Game!\n(1) Start New Game\n(2) Load Saved Game> ";
+    std::cout << "Welcome to the Space Game!\n(1) Start New Game\n(2) Load Saved Game\n> ";
 }
 
 }
