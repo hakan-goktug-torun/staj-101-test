@@ -1,6 +1,8 @@
 #pragma once
 #include "uilanguage.h"
 #include <iostream>
+#include "color.h"
+
 
 class UILangEN : public IUILanguage {
 public:
@@ -9,11 +11,15 @@ public:
     }
 
     void printThanks() override {
-        std::cout << "Thanks for playing!\n";
+        std::cout << BOLD << GREEN
+        << "\n╔════════════════════════════╗\n"
+        << "║     Thanks for playing!      ║\n"
+        << "╚════════════════════════════╝\n"
+        << RESET;
     }
 
     void displayTop5Header() override {
-        std::cout << "\n=== TOP 5 SCORES ===\n";
+        std::cout << BOLD << CYAN << "\n=== TOP 5 SCORES ===\n" << RESET;
     }
 
     void printCongratulations(int score) override {
@@ -26,16 +32,29 @@ public:
     }
 
     void invalidInput() override {
-        std::cout << "Invalid input. Please try again.\n";
+        std::cout << BOLD << RED << "Invalid input. Please try again.\n" << RESET;
     }
 
     void printStatus(const std::shared_ptr<Ship>& ship) override {
-        std::cout << "\n=== Ship Status ===\n";
-        std::cout << "Fuel:     " << ship->getFuel() << "\n";
-        std::cout << "Health:   " << ship->getHealth() << "\n";
-        std::cout << "Balance:  " << ship->getBalance() << "\n";
-        std::cout << "===================\n";
+    std::cout << BOLD << MAGENTA << "\n╔══════════════════════╗\n";
+    std::cout << "║     SHIP STATUS      ║\n";
+    std::cout << "╠══════════════════════╣\n" << RESET;
+
+    std::cout << "  Fuel:    " << GREEN << ship->getFuel() << RESET << "\n";
+
+    std::cout << "  Health:  ";
+    if (ship->getHealth() > 70)
+        std::cout << GREEN;
+    else if (ship->getHealth() > 30)
+        std::cout << YELLOW;
+    else
+        std::cout << RED;
+    std::cout << ship->getHealth() << RESET << "\n";
+
+    std::cout << "  Balance: " << CYAN << ship->getBalance() << RESET << "\n";
+    std::cout << BOLD << MAGENTA << "╚══════════════════════╝" << RESET << "\n";
     }
+
 
     void promptContinue() override {
         std::cout << "Do you want to continue? (Y/N): ";
@@ -54,7 +73,7 @@ public:
     }
 
     void gameLoaded() override {
-        std::cout << "Game loaded from save.txt!\n";
+        std::cout << "Game loaded from save.json!\n";
     }
 
     void loadFailed() override {
@@ -66,7 +85,7 @@ public:
     }
 
     void asteroidFieldDetected() override {
-        std::cout << "Asteroid field detected!\n";
+        std::cout << BOLD << YELLOW << "Asteroid field detected!\n" << RESET;
     }
 
     void asteroidEscape() override {
@@ -78,11 +97,14 @@ public:
     }
 
     void outOfFuel() override {
-        std::cout << "Your ship is out of fuel!\n";
+        std::cout << BOLD << RED << "Your ship is out of fuel! You can't move.\n" << RESET;
     }
 
     void pirateIncoming() override {
-        std::cout << "*************************\nSpace Pirates are coming!\n*************************\n";
+        std::cout << BOLD << RED;
+        std::cout << "\n*************************\n";
+        std::cout << "  SPACE PIRATES INCOMING!\n";
+        std::cout << "*************************\n" << RESET;
     }
 
     void selectAction() override {
@@ -98,11 +120,11 @@ public:
     }
 
     void negotiationSuccess(int cost, int newBalance) override {
-        std::cout << "You paid " << cost << " coins. New balance: " << newBalance << "\n";
+        std::cout << GREEN << "You paid " << cost << " coins. New balance: " << newBalance << "\n" << RESET;
     }
 
     void negotiationFail() override {
-        std::cout << "Not enough money! Pirates are angry!\n";
+        std::cout << RED << "Not enough money! Pirates are angry!\n" << RESET;
     }
 
     void fightSuccess() override {
@@ -110,7 +132,7 @@ public:
     }
 
     void fightFail(int damage, int remainingHealth) override {
-        std::cout << "You lost the fight! Took " << damage << " damage. Remaining health: " << remainingHealth << "\n";
+        std::cout << RED << "You lost the fight! Took " << damage << " damage. Remaining health: " << remainingHealth << "\n" << RESET;
     }
 
     void fightBlocked() override {
@@ -122,7 +144,7 @@ public:
     }
 
     void pirateLowFuelWarning() override {
-        std::cout << "You only have enough fuel to fight or negotiate. Choose wisely!\n";
+        std::cout << BOLD << YELLOW << "Fuel is low! You can only fight or negotiate. Choose wisely!\n" << RESET;
     }
 
     void abandonedPlanetDiscovered() override {
@@ -138,6 +160,18 @@ public:
     }
 
     void printWelcomeMenu() override {
-        std::cout << "Welcome to the Space Game!\n(1) Start New Game\n(2) Load Saved Game\n> ";
+        std::cout << BOLD << CYAN;
+        std::cout << "╔════════════════════════════════════╗\n";
+        std::cout << "║        WELCOME TO SPACE GAME       ║\n";
+        std::cout << "╠════════════════════════════════════╣\n";
+        std::cout << "║ (1) Start New Game                 ║\n";
+        std::cout << "║ (2) Load Saved Game                ║\n";
+        std::cout << "╚════════════════════════════════════╝\n";
+        std::cout << RESET << "> ";
     }
+
+    void printEventDivider() override {
+        std::cout << BOLD << BLUE << "\n――――  New Space Anomaly Detected  ――――\n" << RESET;
+    }
+
 };

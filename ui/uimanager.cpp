@@ -9,4 +9,3 @@ void UIManager::setLanguage(std::unique_ptr<IUILanguage> lang) {
 IUILanguage& UIManager::get() {
     return *currentLang;
 }
-

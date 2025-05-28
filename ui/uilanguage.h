@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 #include "../ships/ship.h"
+#include <chrono>
+#include <thread>
 
 class IUILanguage {
 public:
@@ -39,4 +41,12 @@ public:
     virtual void abandonedPlanetFoundCoins(int coins) = 0;
     virtual void abandonedPlanetPirates() = 0;
     virtual void printWelcomeMenu() = 0;
+    virtual void printEventDivider() = 0;
+
+    inline void printSlow(const std::string& text, int delayMs = 30) {
+    for (char ch : text) {
+        std::cout << ch << std::flush;
+        std::this_thread::sleep_for(std::chrono::milliseconds(delayMs));
+        }
+    }
 };

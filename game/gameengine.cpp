@@ -9,12 +9,18 @@ int GameEngine::start(const std::shared_ptr<Ship>& ship) {
     EventManager eventManager;
 
     for (int i = 0; i < 5; ++i) {
+        UIManager::get().printEventDivider(); 
         eventManager.triggerRandomEvent(ship);
         UIManager::get().printStatus(ship);
 
         if (ship->getFuel() <= 1) {
             UIManager::get().outOfFuel();
             return 0;
+        }
+        if (ship->getHealth() <= 0) {
+        UIManager::get().printStatus(ship);
+        UIManager::get().printThanks();
+        return 0;
         }
 
         std::string answer;

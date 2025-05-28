@@ -1,6 +1,7 @@
 #pragma once
 #include "uilanguage.h"
 #include <iostream>
+#include "color.h"
 
 class UILangTR : public IUILanguage {
 public:
@@ -8,12 +9,16 @@ public:
         std::cout << "Lütfen ismini gir: ";
     }
 
-    void printThanks() override {
-        std::cout << "Oynadığın için teşekkürler!\n";
+    void printThanks() override {   
+            std::cout << BOLD << GREEN
+            << "\n╔════════════════════════════╗\n"
+            << "║Oynadığın için teşekkürler!  ║\n"
+            << "╚════════════════════════════╝\n"
+            << RESET;
     }
 
     void displayTop5Header() override {
-        std::cout << "\n=== EN İYİ 5 SKOR ===\n";
+        std::cout << BOLD << CYAN << "\n=== EN İYİ 5 SKOR ===\n" << RESET;
     }
 
     void printCongratulations(int score) override {
@@ -26,16 +31,29 @@ public:
     }
 
     void invalidInput() override {
-        std::cout << "Geçersiz giriş. Lütfen tekrar deneyin.\n";
+        std::cout << BOLD << RED << "Geçersiz giriş. Lütfen tekrar deneyin.\n" << RESET;
     }
 
     void printStatus(const std::shared_ptr<Ship>& ship) override {
-        std::cout << "\n=== Gemi Durumu ===\n";
-        std::cout << "Yakıt:    " << ship->getFuel() << "\n";
-        std::cout << "Can:      " << ship->getHealth() << "\n";
-        std::cout << "Bakiye:   " << ship->getBalance() << "\n";
-        std::cout << "===================\n";
+    std::cout << BOLD << BLUE << "\n╔══════════════════════╗\n";
+    std::cout << "║     GEMİ DURUMU      ║\n";
+    std::cout << "╠══════════════════════╣\n" << RESET;
+
+    std::cout << "  Yakıt:   " << GREEN << ship->getFuel() << RESET << "\n";
+
+    std::cout << "  Can:     ";
+    if (ship->getHealth() > 70)
+        std::cout << GREEN;
+    else if (ship->getHealth() > 30)
+        std::cout << YELLOW;
+    else
+        std::cout << RED;
+    std::cout << ship->getHealth() << RESET << "\n";
+
+    std::cout << "  Bakiye:  " << CYAN << ship->getBalance() << RESET << "\n";
+    std::cout << BOLD << BLUE << "╚══════════════════════╝" << RESET << "\n";
     }
+
 
     void promptContinue() override {
         std::cout << "Devam etmek istiyor musun? (E/H): ";
@@ -54,7 +72,7 @@ public:
     }
 
     void gameLoaded() override {
-        std::cout << "Oyun 'save.txt' dosyasından yüklendi!\n";
+        std::cout << "Oyun 'save.json' dosyasından yüklendi!\n";
     }
 
     void loadFailed() override {
@@ -66,7 +84,7 @@ public:
     }
 
     void asteroidFieldDetected() override {
-        std::cout << "Asteroit alanı tespit edildi!\n";
+        std::cout << BOLD << YELLOW << "Asteroit alanı tespit edildi!\n" << RESET;
     }
 
     void asteroidEscape() override {
@@ -78,11 +96,14 @@ public:
     }
 
     void outOfFuel() override {
-        std::cout << "Gemin yakıtsız kaldı!\n";
+        std::cout << BOLD << RED << "Gemin yakıtsız kaldı! Hareket edemezsin.\n" << RESET;
     }
 
     void pirateIncoming() override {
-        std::cout << "*************************\nUzay Korsanları geliyor!\n*************************\n";
+        std::cout << BOLD << RED;
+        std::cout << "\n*************************\n";
+        std::cout << "  UZAY KORSANLARI GELİYOR!\n";
+        std::cout << "*************************\n" << RESET;
     }
 
     void selectAction() override {
@@ -98,19 +119,19 @@ public:
     }
 
     void negotiationSuccess(int cost, int newBalance) override {
-        std::cout << cost << " altın verdin. Yeni bakiyen: " << newBalance << "\n";
+        std::cout << GREEN << cost << " altın verdin. Yeni bakiyen: " << newBalance << "\n" << RESET;
     }
 
     void negotiationFail() override {
-        std::cout << "Yeterli paran yok! Korsanlar öfkelendi!\n";
+        std::cout << RED << "Yeterli paran yok! Korsanlar öfkelendi!\n" << RESET;
     }
 
     void fightSuccess() override {
-        std::cout << "Tebrikler! Savaşı kazandın!\n";
+        std::cout << GREEN << BOLD << "Tebrikler! Savaşı kazandın!\n" << RESET;
     }
 
     void fightFail(int damage, int remainingHealth) override {
-        std::cout << "Savaşı kaybettin! " << damage << " hasar aldın. Kalan can: " << remainingHealth << "\n";
+        std::cout << RED << "Savaşı kaybettin! " << damage << " hasar aldın. Kalan can: " << remainingHealth << "\n" << RESET;
     }
 
     void fightBlocked() override {
@@ -122,7 +143,7 @@ public:
     }
 
     void pirateLowFuelWarning() override {
-        std::cout << "Yalnızca savaş ya da pazarlık yapabilirsin. Akıllıca seç!\n";
+        std::cout << BOLD << YELLOW << "Yakıtın yetersiz! Sadece savaş ya da pazarlık yapabilirsin. Akıllıca seç!\n" << RESET;
     }
 
     void abandonedPlanetDiscovered() override {
@@ -138,6 +159,17 @@ public:
     }
 
     void printWelcomeMenu() override {
-        std::cout << "Uzay Oyununa Hoşgeldin!\n(1) Yeni Oyun\n(2) Kayıtlı Oyunu Yükle\n> ";
+        std::cout << BOLD << CYAN;
+        std::cout << "╔════════════════════════════════════╗\n";
+        std::cout << "║         UZAY MACERASINA HOŞGELDİN! ║\n";
+        std::cout << "╠════════════════════════════════════╣\n";
+        std::cout << "║ (1) Yeni Oyun                      ║\n";
+        std::cout << "║ (2) Kayıtlı Oyunu Yükle            ║\n";
+        std::cout << "╚════════════════════════════════════╝\n";
+        std::cout << RESET << "> ";
+    }
+
+    void printEventDivider() override {
+    std::cout << BOLD << BLUE << "\n――――  Yeni Uzay Anomalisi!  ――――\n" << RESET;
     }
 };
