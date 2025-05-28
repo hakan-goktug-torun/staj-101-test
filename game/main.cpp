@@ -6,20 +6,30 @@
 #include "gameengine.h"
 #include "../services/scoreservice.h"
 
-void handleEndOfGame(const std::shared_ptr<Ship>& ship, const std::string& shipTypeStr) {
+void handleEndOfGame(const std::shared_ptr<Ship>& ship, const std::string& shipTypeStr, bool saveOnly) {
     if (ship->getFuel() > 0 && ship->getHealth() > 0) {
         if (PlayerInterface::askToSaveGame()) {
-            ScoreService::saveGame(ship, shipTypeStr);
+            ScoreService::saveGameJSON(ship, shipTypeStr);
         }
 
-        UIManager::promptName();
-        std::string playerName;
-        std::getline(std::cin, playerName);
+        if (!saveOnly) {
+            std::string playerName;
+            UIManager::promptName();
+            std::getline(std::cin, playerName);
 
-        int finalScore = ScoreService::calculate(ship);
-        ScoreService::saveToFile(playerName, finalScore);
-        UIManager::printCongratulations(finalScore);
-        ScoreService::displayTop5();
+            while (playerName.empty()) {
+                UIManager::invalidInput();
+                UIManager::promptName();
+                std::getline(std::cin, playerName);
+            }
+
+            int finalScore = ScoreService::calculate(ship);
+            ScoreService::saveToFile(playerName, finalScore);
+            UIManager::printCongratulations(finalScore);
+            ScoreService::displayTop5();
+        }
+
+        UIManager::printThanks();
     }
 }
 
@@ -29,7 +39,8 @@ int main() {
 
     UIManager::promptLanguage();
     std::string langChoice;
-    std::getline(std::cin, langChoice);
+    std::cin >> langChoice;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     UIManager::lang = UIManager::parseLanguageInput(langChoice);
 
     std::string shipTypeStr;
@@ -37,13 +48,13 @@ int main() {
     if (!ship) return 0;
 
     GameEngine engine;
-    int gameResult = engine.start(ship); // 1 = normal bitiş, 0 = yakıt bitti, -1 = kullanıcı çıkışı
+    int gameResult = engine.start(ship); // 1 = tamamlandı, 0 = yakıt bitti, -1 = kullanıcı çıkışı
 
-    if (gameResult == -1) return 0;
+    if (gameResult == -1 || gameResult == 0) {
+        handleEndOfGame(ship, shipTypeStr, true);  // sadece kayıt, skor yok
+        return 0;
+    }
 
-    handleEndOfGame(ship, shipTypeStr);
-
+    handleEndOfGame(ship, shipTypeStr, false); // skor ve kayıt
     return 0;
 }
-
-
